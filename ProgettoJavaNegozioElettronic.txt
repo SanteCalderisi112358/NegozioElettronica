@@ -1,0 +1,47 @@
+Progetto Java: Negozio di Elettronica
+
+Realizza un'applicazione Java per la gestione di un negozio di elettronica. Il negozio vende diversi tipi di prodotti e offre servizi di riparazione. Il progetto deve includere l'utilizzo di relazioni one-to-many, one-to-one e many-to-many, l'ereditarietà tra classi e l'uso di alcuni enum.
+
+Classi da implementare:
+
+Prodotto: Questa classe rappresenta un generico prodotto in vendita nel negozio di elettronica. Ogni prodotto avrà un nome, un prezzo, una quantità disponibile e una categoria generica (utilizzare l'enum "CategoriaProdotto").
+
+Smartphone: Questa classe estende la classe Prodotto ed aggiunge alcune caratteristiche specifiche per gli smartphone, come la taglia (utilizzare l'enum "TagliaSmartphone") e la memoria interna.
+
+Laptop: Questa classe estende la classe Prodotto ed aggiunge alcune caratteristiche specifiche per i laptop, come il tipo (utilizzare l'enum "TipoLaptop") e la dimensione dello schermo.
+
+Cliente: Questa classe rappresenta un cliente del negozio. Ogni cliente ha un nome, un cognome, un indirizzo e un metodo di pagamento preferito (utilizzare l'enum "MetodoPagamento").
+
+Ordine: Questa classe rappresenta un ordine effettuato da un cliente. Ogni ordine avrà un cliente associato (relazione one-to-many) e un elenco di prodotti acquistati con le relative quantità. Inoltre, l'ordine avrà un metodo di pagamento (utilizzare l'enum "MetodoPagamento") e una data di acquisto.
+
+Riparazione: Questa classe rappresenta una richiesta di riparazione di un prodotto. Ogni richiesta avrà un prodotto associato (relazione one-to-one) e uno stato di riparazione (utilizzare l'enum "StatoRiparazione").
+
+Enum da implementare:
+
+CategoriaProdotto: Enumerazione che definisce le categorie generiche dei prodotti venduti nel negozio (TELEFONIA, INFORMATICA, ELETTRODOMESTICI, ACCESSORI, ecc.).
+
+StatoRiparazione: Enumerazione che definisce gli stati di riparazione di un prodotto (IN_ATTESA, IN_CORSO, COMPLETATA, ANNULLATA).
+
+MetodoPagamento: Enumerazione che definisce i metodi di pagamento disponibili per gli ordini (CONTANTI, CARTA_DI_CREDITO, PAYPAL).
+
+TagliaSmartphone: Enumerazione che definisce le taglie disponibili per gli smartphone (PICCOLO, MEDIO, GRANDE).
+
+TipoLaptop: Enumerazione che definisce i tipi di laptop (ULTRABOOK, GAMING, CONVERTIBILE).
+
+Metodi da implementare:
+
+aggiungiProdotto(Prodotto prodotto, int quantita): Questo metodo permette di aggiungere un nuovo prodotto al negozio specificando la quantità disponibile.
+
+effettuaOrdine(Cliente cliente, List<Prodotto> prodotti, List<Integer> quantita, MetodoPagamento metodoPagamento): Questo metodo permette di effettuare un nuovo ordine da parte di un cliente. Vengono specificati i prodotti da acquistare con le rispettive quantità e il metodo di pagamento scelto.
+
+richiediRiparazione(Prodotto prodotto): Questo metodo permette di richiedere la riparazione di un prodotto. La riparazione avrà uno stato iniziale "IN_ATTESA".
+
+visualizzaProdottiDisponibili(): Questo metodo stampa l'elenco di tutti i prodotti disponibili nel negozio con le relative quantità.
+
+visualizzaOrdiniCliente(Cliente cliente): Questo metodo stampa l'elenco di tutti gli ordini effettuati da un determinato cliente.
+
+visualizzaRichiesteRiparazione(): Questo metodo stampa l'elenco di tutte le richieste di riparazione con il relativo stato.
+
+Nota: Implementare le classi in modo da gestire correttamente le relazioni tra di esse utilizzando le annotazioni appropriate (es. @OneToMany, @OneToOne, @ManyToMany, ecc.). Utilizzare un framework ORM come Hibernate per la gestione della persistenza dei dati.
+
+Bonus: Implementare una funzionalità di ricerca per cercare prodotti nel negozio in base a determinati criteri (es. categoria, prezzo, disponibilità, ecc.).
