@@ -30,24 +30,22 @@ public class Ordine {
 	private MetodoPagamento metodoPagamento;
 	private LocalDate dataAcquisto;
 	@OneToMany(mappedBy = "ordine")
-	private List<Prodotto> prodottiOrdinati = new ArrayList<Prodotto>();
+	private List<Prodotto> prodottiOrdinati = new ArrayList<>();
 	@ManyToOne
 	private Cliente cliente;
 
-	public Ordine(UUID id, MetodoPagamento metodoPagamento, LocalDate dataAcquisto, List<Prodotto> prodottiOrdinati,
+	public Ordine(MetodoPagamento metodoPagamento, LocalDate dataAcquisto, List<Prodotto> prodottiOrdinati,
 			Cliente cliente) {
-		super();
-		this.id = id;
 		this.metodoPagamento = metodoPagamento;
 		this.dataAcquisto = dataAcquisto;
 		this.prodottiOrdinati = prodottiOrdinati;
 		this.cliente = cliente;
+		this.cliente.getOrdiniEffettuati().add(this);
 	}
 
 	@Override
 	public String toString() {
-		return "Ordine [id=" + id + ", metodoPagamento=" + metodoPagamento + ", dataAcquisto=" + dataAcquisto
-				+ ", prodottiOrdinati=" + prodottiOrdinati + ", cliente=" + cliente + "]";
+		return "Ordine: id=" + id + ", metodo di pagamento=" + metodoPagamento + ", data di acquisto=" + dataAcquisto
+				+ ", prodotti ordinati=" + prodottiOrdinati + ", cliente=" + cliente + "]";
 	}
-
 }

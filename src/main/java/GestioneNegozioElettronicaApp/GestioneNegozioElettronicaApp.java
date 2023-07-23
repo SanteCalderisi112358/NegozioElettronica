@@ -1,10 +1,9 @@
 package GestioneNegozioElettronicaApp;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-import java.util.Random;
-import java.util.function.Supplier;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -13,6 +12,7 @@ import com.github.javafaker.Faker;
 
 import GestioneNegozioElettronicaAppEntities.Cliente;
 import GestioneNegozioElettronicaAppEntities.Laptop;
+import GestioneNegozioElettronicaAppEntities.Ordine;
 import GestioneNegozioElettronicaAppEntities.Prodotto;
 import GestioneNegozioElettronicaAppEntities.SmartPhone;
 import GestioneNegozioElettronicaAppEntitiesDao.ClienteDao;
@@ -91,25 +91,37 @@ public class GestioneNegozioElettronicaApp {
 
 		// prodottiDaSalvareNelDB.forEach(prodotto -> prodottoDao.save(prodotto));
 
-		/* CREAZIONE 10 CLIENTI E SALVATAGGIO */
+		/* CREAZIONE CLIENTI E SALVATAGGIO */
+		Cliente cliente01 = new Cliente("Sante", "Calderisi", "Via Sandro Pertini, 26 - Vieste(FG)",
+				MetodoPagamento.CARTA_DI_CREDITO, "34672837");
+		clienteDao.save(cliente01);
 
-		List<Cliente> listaClienti = new ArrayList<Cliente>();
+		// System.out.println(clienteDao.getById(UUID.fromString("0480c9ff-01c7-4ebe-ae03-d6c70c6e3b14")));
+//		List<Cliente> listaClienti = new ArrayList<Cliente>();
+//
+//		Supplier<Cliente> clienteSupplier = () -> {
+//			Random random = new Random();
+//			MetodoPagamento[] metodiPagamento = MetodoPagamento.values();
+//			MetodoPagamento metodoPagamentoCasuale = metodiPagamento[random.nextInt(metodiPagamento.length)];
+//
+//			return new Cliente(f.name().firstName(), f.name().lastName(), f.address().fullAddress(),
+//					metodoPagamentoCasuale);
+//		};
+//
+//		for (int i = 0; i < 10; i++) {
+//			listaClienti.add(clienteSupplier.get());
+//		}
+//
+//		listaClienti.forEach(cliente -> clienteDao.save(cliente));
+		/* ORDINI EFFETTUATI E SALVATAGGIO */
+		List<Prodotto> prodottiOrdinati = new ArrayList<>();
+		prodottiOrdinati.add(prodotto01);
+		prodottiOrdinati.add(prodotto04);
+		prodottiOrdinati.add(smartPhone02);
 
-		Supplier<Cliente> clienteSupplier = () -> {
-			Random random = new Random();
-			MetodoPagamento[] metodiPagamento = MetodoPagamento.values();
-			MetodoPagamento metodoPagamentoCasuale = metodiPagamento[random.nextInt(metodiPagamento.length)];
-
-			return new Cliente(f.name().firstName(), f.name().lastName(), f.address().fullAddress(),
-					metodoPagamentoCasuale);
-		};
-
-		for (int i = 0; i < 10; i++) {
-			listaClienti.add(clienteSupplier.get());
-		}
-
-		// listaClienti.forEach(cliente -> clienteDao.save(cliente));
-
+		// Passa la lista dei prodotti ordinati corretta nel costruttore dell'ordine
+		Ordine ordine01 = new Ordine(MetodoPagamento.CARTA_DI_CREDITO, LocalDate.now(), prodottiOrdinati, cliente01);
+		// ordineDao.save(ordine01);
 		em.close();
 		emf.close();
 

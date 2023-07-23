@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import GestioneNegozioElettronicaAppEntities.Ordine;
+import GestioneNegozioElettronicaAppEntities.Prodotto;
 
 public class OrdineDao {
 	private final EntityManager em;
@@ -22,6 +23,9 @@ public class OrdineDao {
 		EntityTransaction transaction = em.getTransaction();
 		try {
 			transaction.begin();
+			for (Prodotto prodotto : ordine.getProdottiOrdinati()) {
+				em.persist(prodotto);
+			}
 			em.persist(ordine);
 			transaction.commit();
 			log.info(ordine + " è stato salvato correttamente.");
@@ -30,6 +34,9 @@ public class OrdineDao {
 			transaction.rollback();
 		}
 	}
+
+
+
 
 	public Ordine getById(UUID id) {
 		try {

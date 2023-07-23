@@ -1,5 +1,6 @@
 package GestioneNegozioElettronicaAppEntities;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -26,25 +27,29 @@ public class Cliente {
 	private String nome;
 	private String cognome;
 	private String indirizzo;
+	private String numeroTelefono;
 	@Enumerated(EnumType.STRING)
 	private MetodoPagamento metodoPagamentoPreferito;
 	@OneToMany(mappedBy = "cliente")
-	private List<Ordine> ordiniEffettuati;
+	private List<Ordine> ordiniEffettuati = new ArrayList<Ordine>();
 
-	public Cliente(String nome, String cognome, String indirizzo, MetodoPagamento metodoPagamentoPreferito) {
+	public Cliente(String nome, String cognome, String indirizzo, MetodoPagamento metodoPagamentoPreferito,
+			String numeroTelefono) {
 
 
 		this.nome = nome;
 		this.cognome = cognome;
 		this.indirizzo = indirizzo;
 		this.metodoPagamentoPreferito = metodoPagamentoPreferito;
+		this.numeroTelefono = numeroTelefono;
 
 	}
+
 
 	@Override
 	public String toString() {
 		return "Cliente [id=" + id + ", nome=" + nome + ", cognome=" + cognome + ", indirizzo=" + indirizzo
-				+ ", ordiniEffettuati=" + ordiniEffettuati + "]";
+				+ "]";
 	}
 
 }

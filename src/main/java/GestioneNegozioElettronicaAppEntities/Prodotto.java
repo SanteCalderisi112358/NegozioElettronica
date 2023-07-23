@@ -7,6 +7,8 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
@@ -19,6 +21,8 @@ import lombok.Setter;
 @NoArgsConstructor
 @Setter
 @Getter
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+
 public class Prodotto {
 	@Id
 	@GeneratedValue
@@ -28,13 +32,13 @@ public class Prodotto {
 	private int quantitaDisponibile;
 	@Enumerated(EnumType.STRING)
 	private CategoriaProdotto categoria;
+
 	@ManyToOne
 	private Ordine ordine;
-	@OneToOne
+	@OneToOne(mappedBy = "prodottoInRiparazione")
 	private Riparazione riparazione;
 
 	public Prodotto(String nome, double prezzo, CategoriaProdotto categoria, int quantitaDisponibile) {
-
 		this.nome = nome;
 		this.prezzo = prezzo;
 		this.categoria = categoria;
@@ -43,9 +47,6 @@ public class Prodotto {
 
 	@Override
 	public String toString() {
-		return "Prodotto [codiceProdotto=" + codiceProdotto + ", nome=" + nome + ", prezzo=" + prezzo
-				+ ", quantitaDisponibile=" + quantitaDisponibile + ", categoria=" + categoria + ", ordine=" + ordine
-				+ ", riparazione=" + riparazione + "]";
+		return "Prodotto: " + nome + ", prezzo=" + prezzo + " €, categoria=" + categoria + "]";
 	}
-
 }
