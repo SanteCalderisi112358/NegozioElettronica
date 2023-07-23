@@ -1,9 +1,11 @@
 package GestioneNegozioElettronicaAppEntitiesDao;
 
+import java.util.List;
 import java.util.UUID;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
+import javax.persistence.TypedQuery;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -68,5 +70,10 @@ public class ProdottoDao {
 			log.error("Errore durante l'operazione di refresh per il prodotto con ID: " + id, e);
 			throw e;
 		}
+	}
+
+	public List<Prodotto> selezionaProdotti() {
+		TypedQuery<Prodotto> puntiDiEmissione = em.createQuery("SELECT p FROM Prodotto p", Prodotto.class);
+		return puntiDiEmissione.getResultList();
 	}
 }

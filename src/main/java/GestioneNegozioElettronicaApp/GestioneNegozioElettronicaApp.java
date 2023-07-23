@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Scanner;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -94,7 +95,7 @@ public class GestioneNegozioElettronicaApp {
 		/* CREAZIONE CLIENTI E SALVATAGGIO */
 		Cliente cliente01 = new Cliente("Sante", "Calderisi", "Via Sandro Pertini, 26 - Vieste(FG)",
 				MetodoPagamento.CARTA_DI_CREDITO, "34672837");
-		clienteDao.save(cliente01);
+		// clienteDao.save(cliente01);
 
 		// System.out.println(clienteDao.getById(UUID.fromString("0480c9ff-01c7-4ebe-ae03-d6c70c6e3b14")));
 //		List<Cliente> listaClienti = new ArrayList<Cliente>();
@@ -122,9 +123,36 @@ public class GestioneNegozioElettronicaApp {
 		// Passa la lista dei prodotti ordinati corretta nel costruttore dell'ordine
 		Ordine ordine01 = new Ordine(MetodoPagamento.CARTA_DI_CREDITO, LocalDate.now(), prodottiOrdinati, cliente01);
 		// ordineDao.save(ordine01);
+
+
+		Scanner scanner = new Scanner(System.in);
+		List<Prodotto> prodotti = prodottoDao.selezionaProdotti();
+
+		// Mostra i prodotti disponibili
+		System.out.println("Prodotti disponibili:");
+		for (int i = 0; i < prodotti.size(); i++) {
+			System.out.println((i + 1) + " - " + prodotti.get(i).getNome() + ", " + prodotti.get(i).getPrezzo() + " €");
+		}
+
+		// Leggi la scelta dell'utente
+		int scelta = -1;
+		while (scelta <= 0 || scelta > prodotti.size()) {
+		    System.out.print("Scegli il prodotto (inserisci il numero corrispondente): ");
+		    scelta = Integer.parseInt(scanner.nextLine());
+		}
+
+
+		// Ottieni il prodotto selezionato dall'utente
+		Prodotto prodottoScelto = prodotti.get(scelta - 1);
+
+		// Ora puoi fare qualcosa con il prodotto selezionato
+		System.out.println("Hai selezionato: " + prodottoScelto.getNome() + ", prezzo " + prodottoScelto.getPrezzo());
+
 		em.close();
 		emf.close();
+		}
+		
+		
 
-	}
 
 }
