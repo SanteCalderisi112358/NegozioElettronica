@@ -4,10 +4,13 @@ import java.util.List;
 import java.util.UUID;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import GestioneNegozioElettronicaAppEnum.MetodoPagamento;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -23,15 +26,18 @@ public class Cliente {
 	private String nome;
 	private String cognome;
 	private String indirizzo;
+	@Enumerated(EnumType.STRING)
+	private MetodoPagamento metodoPagamentoPreferito;
 	@OneToMany(mappedBy = "cliente")
 	private List<Ordine> ordiniEffettuati;
 
-	public Cliente(UUID id, String nome, String cognome, String indirizzo) {
+	public Cliente(String nome, String cognome, String indirizzo, MetodoPagamento metodoPagamentoPreferito) {
 
-		this.id = id;
+
 		this.nome = nome;
 		this.cognome = cognome;
 		this.indirizzo = indirizzo;
+		this.metodoPagamentoPreferito = metodoPagamentoPreferito;
 
 	}
 

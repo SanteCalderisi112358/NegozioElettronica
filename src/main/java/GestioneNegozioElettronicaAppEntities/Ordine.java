@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.UUID;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
@@ -24,9 +26,10 @@ public class Ordine {
 	@Id
 	@GeneratedValue
 	private UUID id;
+	@Enumerated(EnumType.STRING)
 	private MetodoPagamento metodoPagamento;
 	private LocalDate dataAcquisto;
-	@OneToMany
+	@OneToMany(mappedBy = "ordine")
 	private List<Prodotto> prodottiOrdinati = new ArrayList<Prodotto>();
 	@ManyToOne
 	private Cliente cliente;

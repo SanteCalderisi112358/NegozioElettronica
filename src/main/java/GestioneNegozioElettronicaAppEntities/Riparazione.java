@@ -4,6 +4,8 @@ import java.time.LocalDate;
 import java.util.UUID;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
@@ -22,9 +24,11 @@ public class Riparazione {
 	@Id
 	@GeneratedValue
 	private UUID id;
+	@Enumerated(EnumType.STRING)
 	private MetodoPagamento metodoPagamento;
 	private LocalDate inizioPeriodoRiparazione;
 	private LocalDate finePeriodoPagamento;
+	@Enumerated(EnumType.STRING)
 	private StatoRiparazione statoRiparazione;
 	@OneToOne
 	private Prodotto prodottoInRiparazione;
