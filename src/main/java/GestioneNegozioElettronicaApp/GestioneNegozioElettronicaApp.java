@@ -1,10 +1,10 @@
 package GestioneNegozioElettronicaApp;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Scanner;
+import java.util.UUID;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -13,7 +13,6 @@ import com.github.javafaker.Faker;
 
 import GestioneNegozioElettronicaAppEntities.Cliente;
 import GestioneNegozioElettronicaAppEntities.Laptop;
-import GestioneNegozioElettronicaAppEntities.Ordine;
 import GestioneNegozioElettronicaAppEntities.Prodotto;
 import GestioneNegozioElettronicaAppEntities.SmartPhone;
 import GestioneNegozioElettronicaAppEntitiesDao.ClienteDao;
@@ -121,38 +120,127 @@ public class GestioneNegozioElettronicaApp {
 		prodottiOrdinati.add(smartPhone02);
 
 		// Passa la lista dei prodotti ordinati corretta nel costruttore dell'ordine
-		Ordine ordine01 = new Ordine(MetodoPagamento.CARTA_DI_CREDITO, LocalDate.now(), prodottiOrdinati, cliente01);
+		// Ordine ordine01 = new Ordine(MetodoPagamento.CARTA_DI_CREDITO,
+		// LocalDate.now(), prodottiOrdinati, cliente01);
 		// ordineDao.save(ordine01);
 
+		 System.out.println("Benvenuto nella Gestione Negozio di Elettronica!");
+	        Scanner scanner = new Scanner(System.in);
+	        int sceltaIniziale;
 
-		Scanner scanner = new Scanner(System.in);
-		List<Prodotto> prodotti = prodottoDao.selezionaProdotti();
+	        do {
+	            System.out.println("1. Iscriviti");
+	            System.out.println("2. Accedi");
+	            System.out.println("3. Area Riservata");
+	            System.out.println("0. Esci");
+	            System.out.print("Scegli un'opzione: ");
+	            sceltaIniziale = Integer.parseInt(scanner.nextLine());
 
-		// Mostra i prodotti disponibili
-		System.out.println("Prodotti disponibili:");
-		for (int i = 0; i < prodotti.size(); i++) {
-			System.out.println((i + 1) + " - " + prodotti.get(i).getNome() + ", " + prodotti.get(i).getPrezzo() + " €");
-		}
+	            switch (sceltaIniziale) {
+				case 1:
+					System.out.println("Stai per entrare a far parte del nostro club!");
+					System.out.println("Inserisci il tuo NOME (0 per tornare indietro)");
+					String nome = getInput(scanner);
+					if (nome.equals("0")) {
+						break;
+					}
 
-		// Leggi la scelta dell'utente
-		int scelta = -1;
-		while (scelta <= 0 || scelta > prodotti.size()) {
-		    System.out.print("Scegli il prodotto (inserisci il numero corrispondente): ");
-		    scelta = Integer.parseInt(scanner.nextLine());
-		}
+					System.out.println("Inserisci il tuo COGNOME (0 per tornare indietro)");
+					String cognome = getInput(scanner);
+					if (cognome.equals("0")) {
+						break;
+					}
+
+					System.out.println("Inserisci il tuo INDIRIZZO (0 per tornare indietro)");
+					String indirizzo = getInput(scanner);
+					if (indirizzo.equals("0")) {
+						break;
+					}
+
+					System.out.println("Inserisci il tuo NUMERO DI TELEFONO (0 per tornare indietro)");
+					String numeroTelefono = getInput(scanner);
+					if (numeroTelefono.equals("0")) {
+						break;
+					}
 
 
-		// Ottieni il prodotto selezionato dall'utente
-		Prodotto prodottoScelto = prodotti.get(scelta - 1);
+					System.out.println("Hai completato l'iscrizione!");
+					break;
+	                case 2:
+						// metodo per accedere
+	                    System.out.println("Hai scelto l'opzione Accedi");
+	                    System.out.print("Inserisci la tua password: ");
+	                    String passUtente = scanner.nextLine();
+	                    Cliente clienteAccesso = clienteDao.getById(UUID.fromString(passUtente));
+	                    if (clienteAccesso != null) {
+	                        System.out.println("Benvenuto, " + clienteAccesso.getNome() + " " + clienteAccesso.getCognome() + "!");
+	                        // Menu per gli acquisti
+	                        int sceltaAcquisto;
+	                        do {
+	                            System.out.println("1. Visualizza prodotti disponibili");
+	                            System.out.println("2. Effettua un acquisto");
+	                            System.out.println("3. Visualizza ordini");
+	                            System.out.println("0. Esci");
+	                            System.out.print("Scegli un'opzione: ");
+	                            sceltaAcquisto = Integer.parseInt(scanner.nextLine());
+	                            switch (sceltaAcquisto) {
+	                                case 1:
+	                                    // Mostra i prodotti disponibili
+	                                    List<Prodotto> prodotti = prodottoDao.selezionaProdotti();
+	                                    System.out.println("Prodotti disponibili:");
+	                                    for (int i = 0; i < prodotti.size(); i++) {
+	                                        System.out.println((i + 1) + " - " + prodotti.get(i).getNome() + ", " + prodotti.get(i).getPrezzo() + " €");
+	                                    }
+	                                    break;
+	                                case 2:
+	                                    // Aggiungi qui il codice per l'acquisto
+	                                    System.out.println("Hai scelto di effettuare un acquisto");
+	                                    break;
+	                                case 3:
+	                                    // Aggiungi qui il codice per visualizzare gli ordini dell'utente
+	                                    System.out.println("Hai scelto di visualizzare gli ordini");
+	                                    break;
+	                                case 0:
+	                                    // Torna al menu principale
+	                                    System.out.println("Tornando al menu principale...");
+	                                    break;
+	                                default:
+	                                    System.out.println("Scelta non valida! Riprova");
+	                            }
+	                        } while (sceltaAcquisto != 0);
+	                    } else {
+	                        System.out.println("La tua password non è valida e il tuo profilo non esiste. Iscriviti!");
+	                    }
+	                    break;
+	                case 3:
+	                    // Aggiungi qui il codice per l'opzione 3 (Area Riservata)
+	                    System.out.println("Hai scelto l'opzione Area Riservata");
+	                    break;
+	                case 0:
+	                    // Aggiungi qui il codice per l'opzione 0 (Esci)
+	                    System.out.println("Arrivederci!");
+	                    break;
+	                default:
+	                    System.out.println("Scelta non valida! Riprova");
+	            }
+	        } while (sceltaIniziale != 0);
 
-		// Ora puoi fare qualcosa con il prodotto selezionato
-		System.out.println("Hai selezionato: " + prodottoScelto.getNome() + ", prezzo " + prodottoScelto.getPrezzo());
-
-		em.close();
-		emf.close();
-		}
+	        scanner.close();
+	        em.close();
+	        emf.close();
 		
 		
+		}
 
+		private static String getInput(Scanner scanner) {
+			String input;
+			do {
+				input = scanner.nextLine();
+				if (input.equals("0")) {
+					return "0";
+				}
+			} while (input.trim().isEmpty());
+			return input;
+		}
 
 }
